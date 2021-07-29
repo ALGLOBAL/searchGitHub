@@ -17,7 +17,6 @@ export class GitSearchComponent implements OnInit {
   displayQuery: string;
   form: FormGroup;
   formControls = {};
-  favorites: Array<number> = [];
 
   constructor(
     private unifiedSearchService: UnifiedSearchService,
@@ -73,6 +72,7 @@ export class GitSearchComponent implements OnInit {
     this.searchResults = null;
     const search: string = this.form.value['q'];
     let params = '';
+
     this.modelKeys.forEach((elem) => {
       if (elem === 'q') {
         return false;
@@ -81,22 +81,14 @@ export class GitSearchComponent implements OnInit {
         params += `+${elem}:${this.form.value[elem]}`;
       }
     });
+
     this.searchQuery = search;
+
     if (params !== '') {
       this.searchQuery = `${search}${params}`;
     }
+
     this.displayQuery = this.searchQuery;
     this.gitSearch();
   }
-
-  checkType = key => typeof key === 'string' ? 'text' : typeof key;
-
-  handleFavorite = (id) => {
-    if (this.favorites.includes(id)) {
-      this.favorites = this.favorites.filter(i => i !== id);
-    } else {
-      this.favorites.push(id);
-    }
-  }
-
 }

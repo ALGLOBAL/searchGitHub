@@ -7,22 +7,18 @@
   <button type="submit" [disabled]="!form.valid">Submit</button>
 </form>
 <div *ngIf="searchResults; else loadingBlock">
-  <div *ngIf="searchResults.repositories.total_count || searchResults.code.total_count; else noResultsBlock">
+  <div *ngIf="searchResults.repositories.total_count; else noResultsBlock">
     <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
   </div>
 </div>
 
 <ng-template #resultsBlock>
-    <ul class="list">
-      <app-repository-display
+  <ul class="list">
+    <app-repository-display
       [searchResults]="searchResults.repositories"
       *ngIf="searchResults.repositories">
-      </app-repository-display>
-      <app-code-display
-      [searchResults]="searchResults.code"
-      *ngIf="searchResults.code">
-      </app-code-display>
-    </ul>
+    </app-repository-display>
+  </ul>
 </ng-template>
 
 <ng-template #noResultsBlock>No results found.</ng-template>
