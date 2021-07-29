@@ -1,0 +1,36 @@
+.list_item {
+  border:1px solid black;
+  height: 165px;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.list_item.even {
+  background-color: springgreen;
+}
+.list_item.odd {
+  background-color: palegreen;
+}
+.avatar {
+  width:150px;
+  height:150px;
+  float:left;
+}
+.description {
+  font-size:18px;
+}
+.favorite_icon {
+  position: relative;
+  float: right;
+  bottom: 80px;
+  font-size: 36px;
+  cursor: pointer;
+}
+.favorited {
+  color: yellow;
+  text-shadow:
+   -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}

@@ -1,0 +1,34 @@
+<h3>{{title}} - {{displayQuery}}</h3>
+<form  (ngSubmit)="sendQuery()" [formGroup]="form">
+  <div *ngFor="let key of modelKeys">
+    {{key}} <input placeholder="Enter {{key}} here" formControlName="{{key}}" />
+    <div *ngIf="formControls[key].invalid">{{key}} is not valid</div>
+  </div>
+  <button type="submit" [disabled]="!form.valid">Submit</button>
+</form>
+<div *ngIf="searchResults; else loadingBlock">
+  <div *ngIf="searchResults.repositories.total_count || searchResults.code.total_count; else noResultsBlock">
+    <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
+  </div>
+</div>
+
+<ng-template #resultsBlock>
+    <ul class="list">
+      <app-repository-display
+      [searchResults]="searchResults.repositories"
+      [favorites]="favorites"
+      (updateFavorites)="handleFavorite($event)"
+      *ngIf="searchResults.repositories">
+      </app-repository-display>
+      <app-code-display
+      [searchResults]="searchResults.code"
+      [favorites]="favorites"
+      (updateFavorites)="handleFavorite($event)"
+      *ngIf="searchResults.code">
+      </app-code-display>
+    </ul>
+</ng-template>
+
+<ng-template #noResultsBlock>No results found.</ng-template>
+
+<ng-template #loadingBlock>Loading...</ng-template>
