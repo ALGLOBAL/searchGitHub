@@ -1,8 +1,14 @@
 <h3>{{title}} - {{displayQuery}}</h3>
 <form  (ngSubmit)="sendQuery()" [formGroup]="form">
-  <div *ngFor="let key of modelKeys">
-    {{key}} <input placeholder="Enter {{key}} here" formControlName="{{key}}" />
-    <div *ngIf="formControls[key].invalid">{{key}} is not valid</div>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search or jump to...</mat-label>
+    <input formControlName="{{'q'}}" matInput>
+  </mat-form-field>
+
+  <div class="search-input">
+    <input placeholder="Search or jump to..." formControlName="{{'q'}}" />
+    <div *ngIf="formControls['q'].invalid">Search is not valid</div>
   </div>
   <button type="submit" [disabled]="!form.valid">Submit</button>
 </form>

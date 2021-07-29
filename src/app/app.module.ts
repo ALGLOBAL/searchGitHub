@@ -13,6 +13,7 @@ import { GitSearchComponent } from './components/git-search/git-search.component
 import { UnifiedSearchService } from './services/unified-search.service';
 import { RepositoryDisplayComponent } from './components/repository-display/repository-display.component';
 import { FadeDirective } from './directives/fade.directive';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FadeDirective } from './directives/fade.directive';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [
     GitSearchService,

@@ -18,25 +18,22 @@ export class GitSearchComponent implements OnInit {
   form: FormGroup;
   formControls = {};
 
-  constructor(
-    private unifiedSearchService: UnifiedSearchService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(private unifiedSearchService: UnifiedSearchService, private route: ActivatedRoute, private router: Router) {
     this.modelKeys.forEach((key) => {
+      console.log(key);
+
       const validators: Array<ValidatorFn> = [this.noSpecialChars];
       if (key === 'q') {
         validators.push(Validators.required);
       }
-      if (key === 'stars') {
-        validators.push(Validators.maxLength(4));
-      }
+
       this.formControls[key] = new FormControl(this.model[key], validators);
     });
+
     this.form = new FormGroup(this.formControls);
   }
 
-  model = new AdvancedSearchModel('', '', '', null, null, '');
+  model = new AdvancedSearchModel('');
   modelKeys = Object.keys(this.model);
 
   noSpecialChars (c: FormControl) {
@@ -71,6 +68,7 @@ export class GitSearchComponent implements OnInit {
   sendQuery = () => {
     this.searchResults = null;
     const search: string = this.form.value['q'];
+
     let params = '';
 
     this.modelKeys.forEach((elem) => {
