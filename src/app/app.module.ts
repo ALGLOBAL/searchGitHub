@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { GitSearchService } from './services/git-search.service';
 import { GitSearchComponent } from './components/git-search/git-search.component';
-import { UnifiedSearchService } from './services/unified-search.service';
 import { RepositoryDisplayComponent } from './components/repository-display/repository-display.component';
 import { FadeDirective } from './directives/fade.directive';
 import { MatInputModule } from '@angular/material/input';
@@ -42,7 +41,6 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     GitSearchService,
-    UnifiedSearchService
   ],
   bootstrap: [AppComponent]
 })

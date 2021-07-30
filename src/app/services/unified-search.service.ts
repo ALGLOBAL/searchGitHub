@@ -16,7 +16,7 @@ export class UnifiedSearchService {
 
   unifiedSearch: Function = (query: string): Observable<UnifiedSearch> => {
       return forkJoin(
-        this.searchService.gitSearch(query),
+        // this.searchService.gitSearch(query),
       ).pipe(
         map((response: [GitSearch]) => {
           return {

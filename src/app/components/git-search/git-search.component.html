@@ -8,7 +8,7 @@
   </div>
   <div class="wrapper-body">
     <div class="wrapper-body" *ngIf="!isLoad; else loadingBlock">
-      <div class="results_block" *ngIf="searchResults.repositories.total_count; else noResultsBlock">
+      <div class="results_block" *ngIf="repositories?.total_count; else noResultsBlock">
         <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
       </div>
     </div>
@@ -35,8 +35,8 @@
 <ng-template #resultsBlock>
   <ul class="list">
     <app-repository-display
-      [searchResults]="searchResults.repositories"
-      *ngIf="searchResults.repositories">
+      [searchResults]="repositories"
+      *ngIf="repositories">
     </app-repository-display>
   </ul>
 </ng-template>
