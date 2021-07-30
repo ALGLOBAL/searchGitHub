@@ -22,12 +22,20 @@
   flex-direction: column;
   height: 100vh;
 
-  &-mat_input {
-    background-color: antiquewhite;
+  &-title{
+    background-color: #24292e;
+    color: whitesmoke;
+    margin: 0;
+    padding: 20px;
   }
 
-  &-input {
-    height: 30px;
+  &-mat_input {
+    border-bottom: 1px solid #24292e;
+    margin-top: 20px;
+
+    .mat-form-field {
+      width: 245px;
+    }
   }
 
   &-search_button {

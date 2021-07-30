@@ -15,6 +15,7 @@ export class UnifiedSearchService {
   ) { }
 
   unifiedSearch: Function = (query: string): Observable<UnifiedSearch> => {
+    console.log('unifiedSearch!!!!!!!!!!');
       return forkJoin(
         this.searchService.gitSearch(query),
       ).pipe(

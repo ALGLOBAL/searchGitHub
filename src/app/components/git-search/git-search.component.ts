@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UnifiedSearchService } from '../../services/unified-search.service';
-import { GitSearch } from '../../models/git-search';
 
 @Component({
   selector: 'app-git-search',
@@ -17,31 +15,17 @@ export class GitSearchComponent implements OnInit {
   };
   isLoad: boolean = false;
   searchQuery: string;
-  title: string;
-  displayQuery: string;
-  form: FormGroup;
-  formControls = {};
-  input: string = 'q';
 
-  text: string = '';
-  res: string = '';
+  constructor(private unifiedSearchService: UnifiedSearchService, private route: ActivatedRoute, private router: Router) {};
 
-  constructor(private unifiedSearchService: UnifiedSearchService, private route: ActivatedRoute, private router: Router) {
-    // const validators: Array<ValidatorFn> = [this.noSpecialChars];
-    // validators.push(Validators.required);
-    //
-    // this.formControls[this.input] = new FormControl(this.input, validators);
-    // this.form = new FormGroup(this.formControls);
-  };
-
-  noSpecialChars (c: FormControl) {
-    const regExp = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/);
-    return regExp.test(c.value) ? {
-      validateEmail: {
-        valid: false
-      }
-    } : null;
-  };
+  // noSpecialChars (c: FormControl) {
+  //   const regExp = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/);
+  //   return regExp.test(c.value) ? {
+  //     validateEmail: {
+  //       valid: false
+  //     }
+  //   } : null;
+  // };
 
   ngOnInit() {};
 
@@ -80,10 +64,7 @@ export class GitSearchComponent implements OnInit {
 
   onChange = (event) => {
     this.isLoad = true;
-    console.log('onClick', event, this);
-    this.res = event.data;
-    this.searchQuery = event.data;
-    this.displayQuery = event.data;
+    this.searchQuery = event.target.value;
     this.gitSearch();
   }
 }

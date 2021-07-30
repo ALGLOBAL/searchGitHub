@@ -7,13 +7,16 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { GitSearchService } from './services/git-search.service';
-import { GitUserSearchService } from './services/git-user-search.service';
 import { GitSearchComponent } from './components/git-search/git-search.component';
 import { UnifiedSearchService } from './services/unified-search.service';
 import { RepositoryDisplayComponent } from './components/repository-display/repository-display.component';
 import { FadeDirective } from './directives/fade.directive';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store'
+import { reducer } from './store/reducers/search.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,10 +33,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     MatInputModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({model: reducer}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
   ],
   providers: [
     GitSearchService,
-    GitUserSearchService,
     UnifiedSearchService
   ],
   bootstrap: [AppComponent]
