@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { UnifiedSearchService } from '../../services/unified-search.service';
+import { Observable } from 'rxjs';
+import * as actions from '../../store/actions/search.actions';
+import * as selectors from '../../store/selectors/search.selectors';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../store/state/app.state';
+import { GitSearchService } from '../../services/git-search.service';
+import { GitSearch } from '../../models/git-search';
 
 @Component({
   selector: 'app-git-search',
@@ -15,55 +21,38 @@ export class GitSearchComponent implements OnInit {
   };
   isLoad: boolean = false;
   searchQuery: string;
+  loading$: Observable<boolean>;
 
-  constructor(private unifiedSearchService: UnifiedSearchService, private route: ActivatedRoute, private router: Router) {};
+  ngOnInit() {
+    this.loading$.subscribe((data: boolean) => {
+      this.isLoad = data;
+    });
+  };
 
-  // noSpecialChars (c: FormControl) {
-  //   const regExp = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/);
-  //   return regExp.test(c.value) ? {
-  //     validateEmail: {
-  //       valid: false
-  //     }
-  //   } : null;
-  // };
-
-  ngOnInit() {};
+  constructor(
+    private store: Store<IAppState>,
+    private searchService: GitSearchService,
+    private unifiedSearchService: UnifiedSearchService,
+  ) {
+    this.loading$ = store.select(selectors.selectIsLoading);
+  };
 
   gitSearch = () => {
     console.log('gitSearch');
 
     this.unifiedSearchService.unifiedSearch(this.searchQuery)
       .subscribe((res) => {
-        console.log('subscribe', res);
-
         this.searchResults = res;
-
-        this.isLoad = false;
+        this.store.dispatch(actions.toggleLoading());
       }, error => {
         console.warn(error);
         alert(`Error: ${error.statusText}`);
       });
   };
 
-  sendQuery = () => {
-    // console.log('sendQuery');
-    // this.searchResults = null;
-    // const search: string = this.form.value[this.input];
-    // console.log('sendQuery search', search);
-    // let params = '';
-    //
-    // this.searchQuery = search;
-    //
-    // if (params !== '') {
-    //   this.searchQuery = `${search}${params}`;
-    // }
-    // console.log('sendQuery this.searchQuery', this.searchQuery);
-    // this.displayQuery = this.searchQuery;
-    // this.gitSearch();
-  };
-
   onChange = (event) => {
-    this.isLoad = true;
+    this.store.dispatch(actions.toggleLoading());
+
     this.searchQuery = event.target.value;
     this.gitSearch();
   }
