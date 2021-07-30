@@ -1,5 +1,4 @@
 import { Directive, Renderer2, ElementRef, HostListener } from '@angular/core';
-import { MockNgModuleResolver } from '@angular/compiler/testing';
 
 @Directive({
   selector: '[appFade]'

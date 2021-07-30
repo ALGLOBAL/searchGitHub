@@ -16,3 +16,37 @@
 .search-input{
   background-color: #24292e;
 }
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &-mat_input {
+    background-color: antiquewhite;
+  }
+
+  &-input {
+    height: 30px;
+  }
+
+  &-search_button {
+    background-color: #565a59;
+  }
+
+  &-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.loading{
+  color: #292929;
+  font-size: 30px;
+}
+
+.results_block{
+  width: 100%;
+}

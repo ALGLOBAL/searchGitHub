@@ -1,22 +1,36 @@
-<h3>{{title}} - {{displayQuery}}</h3>
-<form  (ngSubmit)="sendQuery()" [formGroup]="form">
-
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Search or jump to...</mat-label>
-    <input formControlName="{{'q'}}" matInput>
-  </mat-form-field>
-
-  <div class="search-input">
-    <input placeholder="Search or jump to..." formControlName="{{'q'}}" />
-    <div *ngIf="formControls['q'].invalid">Search is not valid</div>
+<div class="wrapper">
+  <h3 class="wrapper-title">GitHub search: {{res}}</h3>
+  <div class="wrapper-mat_input">
+    <mat-form-field appearance="fill">
+      <mat-label>Search or jump to...</mat-label>
+      <input matInput [type]="'text'" (input)="onChange($event)">
+    </mat-form-field>
   </div>
-  <button type="submit" [disabled]="!form.valid">Submit</button>
-</form>
-<div *ngIf="searchResults; else loadingBlock">
-  <div *ngIf="searchResults.repositories.total_count; else noResultsBlock">
-    <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
+  <div class="wrapper-body">
+    <div class="wrapper-body" *ngIf="!isLoad; else loadingBlock">
+      <div class="results_block" *ngIf="searchResults.repositories.total_count; else noResultsBlock">
+        <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
+      </div>
+    </div>
   </div>
 </div>
+
+
+
+
+
+<!--<form  (ngSubmit)="sendQuery()" [formGroup]="form">
+
+
+
+  <div class="search-input">
+    <input placeholder="Search or jump to..." formControlName="{{input}}" />
+    <div *ngIf="formControls[input].invalid">Search is not valid</div>
+  </div>
+  <button type="submit" [disabled]="!form.valid">Submit</button>
+</form>-->
+
+
 
 <ng-template #resultsBlock>
   <ul class="list">
@@ -29,4 +43,6 @@
 
 <ng-template #noResultsBlock>No results found.</ng-template>
 
-<ng-template #loadingBlock>Loading...</ng-template>
+<ng-template  #loadingBlock>
+  <div class="loading">Loading...</div>
+</ng-template>

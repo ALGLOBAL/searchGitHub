@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { UnifiedSearchService } from '../../services/unified-search.service';
 import { GitSearch } from '../../models/git-search';
-import { AdvancedSearchModel } from '../../models/advanced-search-model';
 
 @Component({
   selector: 'app-git-search',
@@ -11,30 +10,29 @@ import { AdvancedSearchModel } from '../../models/advanced-search-model';
   styleUrls: ['./git-search.component.scss']
 })
 export class GitSearchComponent implements OnInit {
-  searchResults: GitSearch;
+  searchResults = {
+    repositories: {
+      total_count: 0
+    }
+  };
+  isLoad: boolean = false;
   searchQuery: string;
   title: string;
   displayQuery: string;
   form: FormGroup;
   formControls = {};
+  input: string = 'q';
+
+  text: string = '';
+  res: string = '';
 
   constructor(private unifiedSearchService: UnifiedSearchService, private route: ActivatedRoute, private router: Router) {
-    this.modelKeys.forEach((key) => {
-      console.log(key);
-
-      const validators: Array<ValidatorFn> = [this.noSpecialChars];
-      if (key === 'q') {
-        validators.push(Validators.required);
-      }
-
-      this.formControls[key] = new FormControl(this.model[key], validators);
-    });
-
-    this.form = new FormGroup(this.formControls);
-  }
-
-  model = new AdvancedSearchModel('');
-  modelKeys = Object.keys(this.model);
+    // const validators: Array<ValidatorFn> = [this.noSpecialChars];
+    // validators.push(Validators.required);
+    //
+    // this.formControls[this.input] = new FormControl(this.input, validators);
+    // this.form = new FormGroup(this.formControls);
+  };
 
   noSpecialChars (c: FormControl) {
     const regExp = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/);
@@ -43,50 +41,49 @@ export class GitSearchComponent implements OnInit {
         valid: false
       }
     } : null;
-  }
+  };
 
-  ngOnInit() {
-    this.route.paramMap.subscribe( (params: ParamMap) => {
-      this.searchQuery = params.get('query');
-      this.displayQuery = params.get('query');
-      this.gitSearch();
-    });
-    this.route.data.subscribe( (result) => {
-      this.title = result.title;
-    });
-  }
+  ngOnInit() {};
 
   gitSearch = () => {
+    console.log('gitSearch');
+
     this.unifiedSearchService.unifiedSearch(this.searchQuery)
-    .subscribe((res) => {
-      this.searchResults = res;
-    }, (error) => {
-      alert(`Error: ${error.statusText}`);
-    });
-  }
+      .subscribe((res) => {
+        console.log('subscribe', res);
+
+        this.searchResults = res;
+
+        this.isLoad = false;
+      }, error => {
+        console.warn(error);
+        alert(`Error: ${error.statusText}`);
+      });
+  };
 
   sendQuery = () => {
-    this.searchResults = null;
-    const search: string = this.form.value['q'];
+    // console.log('sendQuery');
+    // this.searchResults = null;
+    // const search: string = this.form.value[this.input];
+    // console.log('sendQuery search', search);
+    // let params = '';
+    //
+    // this.searchQuery = search;
+    //
+    // if (params !== '') {
+    //   this.searchQuery = `${search}${params}`;
+    // }
+    // console.log('sendQuery this.searchQuery', this.searchQuery);
+    // this.displayQuery = this.searchQuery;
+    // this.gitSearch();
+  };
 
-    let params = '';
-
-    this.modelKeys.forEach((elem) => {
-      if (elem === 'q') {
-        return false;
-      }
-      if (this.form.value[elem]) {
-        params += `+${elem}:${this.form.value[elem]}`;
-      }
-    });
-
-    this.searchQuery = search;
-
-    if (params !== '') {
-      this.searchQuery = `${search}${params}`;
-    }
-
-    this.displayQuery = this.searchQuery;
+  onChange = (event) => {
+    this.isLoad = true;
+    console.log('onClick', event, this);
+    this.res = event.data;
+    this.searchQuery = event.data;
+    this.displayQuery = event.data;
     this.gitSearch();
   }
 }

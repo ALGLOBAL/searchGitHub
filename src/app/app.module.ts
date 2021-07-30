@@ -8,12 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { GitSearchService } from './services/git-search.service';
 import { GitUserSearchService } from './services/git-user-search.service';
-import { GitCodeSearchService } from './services/git-code-search.service';
 import { GitSearchComponent } from './components/git-search/git-search.component';
 import { UnifiedSearchService } from './services/unified-search.service';
 import { RepositoryDisplayComponent } from './components/repository-display/repository-display.component';
 import { FadeDirective } from './directives/fade.directive';
 import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,12 +28,12 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     GitSearchService,
     GitUserSearchService,
-    GitCodeSearchService,
     UnifiedSearchService
   ],
   bootstrap: [AppComponent]
