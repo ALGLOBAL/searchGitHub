@@ -6,6 +6,7 @@ export enum ESearchActions {
   SetRepositoriesStore = 'set_repositories_store',
   OnChangeSearch = 'on_change_search',
   ToggleLoading = 'toggle_loading',
+  ClearRepositories = 'clear_repositories',
 }
 
 export const toggleLoading = createAction(
@@ -24,4 +25,8 @@ export const onChangeSearch = createAction(
 export const setRepositoriesStore = createAction(
   ESearchActions.SetRepositoriesStore,
   props<{ payload: GitSearch }>()
+);
+
+export const clearRepositories = createAction(
+  ESearchActions.ClearRepositories,
 );

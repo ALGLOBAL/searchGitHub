@@ -16,6 +16,8 @@ import { StoreModule } from '@ngrx/store'
 import { reducer } from './store/reducers/search.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { SearchEffects } from './store/effects/search.effects';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { environment } from '../environments/environment';
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
+    EffectsModule.forRoot([SearchEffects]),
   ],
   providers: [
     GitSearchService,

@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
-import { createEffect, ofType, Actions } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
-import { of } from 'rxjs';
-import { switchMap, map, withLatestFrom } from 'rxjs/operators';
-
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { EMPTY, of } from 'rxjs';
+import { map, mergeMap, catchError, exhaustMap, switchMap, debounceTime } from 'rxjs/operators';
+import { GitSearchService } from '../../services/git-search.service';
 import { IAppState } from '../state/app.state';
-import {
-  SetRepositoriesStore,
-  GetRepositoriesBySearch,
-  GetRepositoriesFromStore,
-  ESearchActions,
-} from '../actions/search.actions';
-import { selectRepositories } from '../selectors/search.selectors';
+import * as actions from "../actions/search.actions";
+// import { selectRepositories } from '../selectors/search.selectors';
 
 @Injectable()
 export class SearchEffects {
-  getRepositories = createEffect(() =>
-    this._actions$.pipe(
-      ofType<GetRepositoriesFromStore>(ESearchActions.GetRepositoriesFromStore),
-      map(() => this._store)
+  loadRepositories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.onChangeSearch),
+      debounceTime(300),
+      switchMap(action => {
+        this.store.dispatch(actions.toggleLoading());
+        return this.repositoriesService.getSearch(action.payload).pipe(
+          switchMap(repos => of(
+            actions.toggleLoading(),
+            actions.setRepositoriesStore({ payload: repos })),
+          ),
+          catchError(() => of(actions.clearRepositories()))
+        );
+      }),
     )
   );
 
   constructor(
-    private _actions$: Actions,
-    private _store: Store<IAppState>,
+    private store: Store<IAppState>,
+    private actions$: Actions,
+    private repositoriesService: GitSearchService,
   ) {}
 }

@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <h3 class="wrapper-title">GitHub search: {{searchQuery}}</h3>
+  <h3 class="wrapper-title">GitHub search</h3>
   <div class="wrapper-mat_input">
     <mat-form-field appearance="fill">
       <mat-label>Search or jump to...</mat-label>
@@ -15,23 +15,6 @@
   </div>
 </div>
 
-
-
-
-
-<!--<form  (ngSubmit)="sendQuery()" [formGroup]="form">
-
-
-
-  <div class="search-input">
-    <input placeholder="Search or jump to..." formControlName="{{input}}" />
-    <div *ngIf="formControls[input].invalid">Search is not valid</div>
-  </div>
-  <button type="submit" [disabled]="!form.valid">Submit</button>
-</form>-->
-
-
-
 <ng-template #resultsBlock>
   <ul class="list">
     <app-repository-display
@@ -41,7 +24,9 @@
   </ul>
 </ng-template>
 
-<ng-template #noResultsBlock>No results found.</ng-template>
+<ng-template #noResultsBlock>
+  <div class="loading">No results found!</div>
+</ng-template>
 
 <ng-template  #loadingBlock>
   <div class="loading">Loading...</div>

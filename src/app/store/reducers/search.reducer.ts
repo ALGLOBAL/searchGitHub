@@ -6,11 +6,14 @@ const searchReducer = createReducer(
   initialAppState,
   on(actions.setRepositoriesStore, (state, { payload } ) => ({
     ...state,
-    ...payload,
+    repositories: { ...payload },
   })),
   on(actions.toggleLoading, state => ({
     ...state,
     loading: !state.loading,
+  })),
+  on(actions.clearRepositories, state => ({
+    ...initialAppState,
   })),
 );
 
