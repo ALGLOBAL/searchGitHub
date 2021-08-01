@@ -11,6 +11,7 @@ import { GitSearchComponent } from './components/git-search/git-search.component
 import { RepositoryDisplayComponent } from './components/repository-display/repository-display.component';
 import { FadeDirective } from './directives/fade.directive';
 import { MatInputModule } from '@angular/material/input';
+import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store'
 import { reducer } from './store/reducers/search.reducer';
@@ -44,6 +45,7 @@ import { SearchEffects } from './store/effects/search.effects';
   ],
   providers: [
     GitSearchService,
+    {provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'noop' } as MatCheckboxDefaultOptions}
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,6 @@ export interface IAppState {
 
 export const initialAppState: IAppState = {
   repositories: initRepositories,
-  loading: false,
+  loading: true,
 };
 

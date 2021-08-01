@@ -11,6 +11,7 @@ export enum ESearchActions {
 
 export const toggleLoading = createAction(
   ESearchActions.ToggleLoading,
+  props<{ payload: boolean }>()
 );
 
 export const getRepositoriesFromStore = createAction(
@@ -19,7 +20,7 @@ export const getRepositoriesFromStore = createAction(
 
 export const onChangeSearch = createAction(
   ESearchActions.OnChangeSearch,
-  props<{ payload: string }>()
+  props<{ payload: any }>()
 );
 
 export const setRepositoriesStore = createAction(

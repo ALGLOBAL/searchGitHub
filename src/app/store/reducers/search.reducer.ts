@@ -8,11 +8,11 @@ const searchReducer = createReducer(
     ...state,
     repositories: { ...payload },
   })),
-  on(actions.toggleLoading, state => ({
+  on(actions.toggleLoading, (state, { payload } ) => ({
     ...state,
-    loading: !state.loading,
+    loading: payload,
   })),
-  on(actions.clearRepositories, state => ({
+  on(actions.clearRepositories, () => ({
     ...initialAppState,
   })),
 );

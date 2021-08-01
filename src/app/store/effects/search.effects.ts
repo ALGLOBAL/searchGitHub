@@ -6,6 +6,7 @@ import { map, mergeMap, catchError, exhaustMap, switchMap, debounceTime } from '
 import { GitSearchService } from '../../services/git-search.service';
 import { IAppState } from '../state/app.state';
 import * as actions from "../actions/search.actions";
+import { filter } from './logic';
 // import { selectRepositories } from '../selectors/search.selectors';
 
 @Injectable()
@@ -15,12 +16,9 @@ export class SearchEffects {
       ofType(actions.onChangeSearch),
       debounceTime(300),
       switchMap(action => {
-        this.store.dispatch(actions.toggleLoading());
-        return this.repositoriesService.getSearch(action.payload).pipe(
-          switchMap(repos => of(
-            actions.toggleLoading(),
-            actions.setRepositoriesStore({ payload: repos })),
-          ),
+        return this.repositoriesService.getSearch(action.payload.query).pipe(
+          map(repos => filter(repos, action.payload.filters)),
+          map(filteredRepos => actions.setRepositoriesStore({ payload: filteredRepos })),
           catchError(() => of(actions.clearRepositories()))
         );
       }),

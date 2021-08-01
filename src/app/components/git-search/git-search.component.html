@@ -5,10 +5,11 @@
       <mat-label>Search or jump to...</mat-label>
       <input matInput [type]="'text'" (input)="onChange($event)">
     </mat-form-field>
+    <!--<mat-checkbox class="example-margin">Check me!</mat-checkbox>-->
   </div>
   <div class="wrapper-body">
     <div class="wrapper-body" *ngIf="!isLoad; else loadingBlock">
-      <div class="results_block" *ngIf="repositories?.total_count; else noResultsBlock">
+      <div class="results_block" *ngIf="repositories?.items.length; else noResultsBlock">
         <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
       </div>
     </div>

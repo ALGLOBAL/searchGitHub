@@ -16,10 +16,14 @@ export class GitSearchComponent implements OnInit {
   repositories$: Observable<GitSearch> = this.store.select(selectors.selectRepositories);
   isLoad: boolean = false;
   loading$: Observable<boolean> = this.store.select(selectors.selectIsLoading);
+  filters: Array<string> = ['JavaScript'];
 
   ngOnInit() {
     this.loading$.subscribe((data: boolean) => this.isLoad = data);
-    this.repositories$.subscribe((repos: GitSearch) => this.repositories = repos)
+    this.repositories$.subscribe((repos: GitSearch) => {
+      this.store.dispatch(actions.toggleLoading({ payload: false }));
+      this.repositories = repos;
+    })
   };
 
   constructor(
@@ -27,6 +31,11 @@ export class GitSearchComponent implements OnInit {
   ) {};
 
   onChange = (event) => {
-    this.store.dispatch(actions.onChangeSearch({ payload: event.target.value }));
+    !this.isLoad && this.store.dispatch(actions.toggleLoading({ payload: true }));
+    this.store.dispatch(actions.onChangeSearch({ payload: {
+        query: event.target.value,
+        filters: this.filters,
+      }
+    }));
   }
 }
