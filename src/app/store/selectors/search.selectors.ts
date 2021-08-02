@@ -13,3 +13,8 @@ export const selectIsLoading = createSelector(
   selectModel,
   (model: IAppState) => model.loading
 );
+
+export const selectAdditionalData = createSelector(
+  selectModel,
+  (model: IAppState) => model.additionalData
+);

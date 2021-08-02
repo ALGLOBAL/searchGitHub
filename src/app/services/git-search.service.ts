@@ -11,6 +11,6 @@ export class GitSearchService {
   getSearch(query: string) {
     const url = `https://api.github.com/search/repositories?q=${query}`;
 
-    return this.http.get<GitSearch>(url);
+    return this.http.get<any>(url);
   }
 }

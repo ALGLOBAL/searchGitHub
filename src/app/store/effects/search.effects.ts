@@ -23,6 +23,19 @@ export class SearchEffects {
     )
   );
 
+  loadAdditionalReposData = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.getAdditionalReposData),
+      debounceTime(500),
+      switchMap(action => {
+        return this.repositoriesService.getSearch(action.payload.query).pipe(
+          map(repo => actions.setAdditionalReposDataStore({ payload: repo.organization })),
+          catchError(() => of(actions.setAdditionalReposDataStore({ payload: null })))
+        );
+      }),
+    )
+  );
+
   constructor(
     private store: Store<IAppState>,
     private actions$: Actions,

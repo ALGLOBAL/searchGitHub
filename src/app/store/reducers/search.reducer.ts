@@ -4,16 +4,20 @@ import { initialAppState, IAppState } from '../state/app.state';
 
 const searchReducer = createReducer(
   initialAppState,
-  on(actions.setRepositoriesStore, (state, { payload } ) => ({
+  on(actions.setRepositoriesStore, (state, { payload }) => ({
     ...state,
     repositories: { ...payload },
   })),
-  on(actions.toggleLoading, (state, { payload } ) => ({
+  on(actions.toggleLoading, (state, { payload }) => ({
     ...state,
     loading: payload,
   })),
   on(actions.clearRepositories, () => ({
     ...initialAppState,
+  })),
+  on(actions.setAdditionalReposDataStore, (state, { payload }) => ({
+    ...state,
+    additionalData: { ...payload },
   })),
 );
 

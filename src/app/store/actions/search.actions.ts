@@ -1,8 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { GitSearch } from '../../models/git-search';
+import { GitAdditionalData } from '../../models/git-additional-data';
 
 export enum ESearchActions {
-  GetRepositoriesFromStore = 'get_repositories_from_store',
+  GetAdditionalReposData = 'get_additional_repos_data',
+  SetAdditionalReposData = 'set_additional_repos_data_store',
   SetRepositoriesStore = 'set_repositories_store',
   OnChangeSearch = 'on_change_search',
   ToggleLoading = 'toggle_loading',
@@ -14,13 +16,19 @@ export const toggleLoading = createAction(
   props<{ payload: boolean }>()
 );
 
-export const getRepositoriesFromStore = createAction(
-  ESearchActions.GetRepositoriesFromStore,
+export const getAdditionalReposData = createAction(
+  ESearchActions.GetAdditionalReposData,
+  props<{ payload: { query: string } }>()
+);
+
+export const setAdditionalReposDataStore = createAction(
+  ESearchActions.SetAdditionalReposData,
+  props<{ payload: GitAdditionalData }>()
 );
 
 export const onChangeSearch = createAction(
   ESearchActions.OnChangeSearch,
-  props<{ payload: any }>()
+  props<{ payload: { query: string } }>()
 );
 
 export const setRepositoriesStore = createAction(

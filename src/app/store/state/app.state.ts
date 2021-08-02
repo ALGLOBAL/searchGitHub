@@ -1,13 +1,16 @@
 import { GitSearch } from '../../models/git-search';
+import { GitAdditionalData } from '../../models/git-additional-data';
 import { initRepositories } from './repositoryes.state';
 
 export interface IAppState {
-  repositories: GitSearch;
   loading: boolean;
+  repositories: GitSearch;
+  additionalData: GitAdditionalData;
 }
 
 export const initialAppState: IAppState = {
-  repositories: initRepositories,
   loading: true,
+  repositories: initRepositories,
+  additionalData: null,
 };
 
