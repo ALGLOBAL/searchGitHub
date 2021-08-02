@@ -26,6 +26,10 @@ export class GitSearchComponent implements OnInit {
   }];
   querySearch: string = '';
 
+  constructor(
+    private store: Store<IAppState>,
+  ) {};
+
   ngOnInit() {
     this.loading$.subscribe((data: boolean) => this.isLoad = data);
 
@@ -34,10 +38,6 @@ export class GitSearchComponent implements OnInit {
       this.repositories = filter(repos, this.filters);
     })
   };
-
-  constructor(
-    private store: Store<IAppState>,
-  ) {};
 
   onSearch = () => {
     !this.isLoad && this.store.dispatch(actions.toggleLoading({ payload: true }));

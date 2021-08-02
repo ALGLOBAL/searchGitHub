@@ -28,7 +28,7 @@ export class SearchEffects {
       ofType(actions.getAdditionalReposData),
       debounceTime(500),
       switchMap(action => {
-        return this.repositoriesService.getSearch(action.payload.query).pipe(
+        return this.repositoriesService.getQuery(action.payload.query).pipe(
           map(repo => actions.setAdditionalReposDataStore({ payload: repo.organization })),
           catchError(() => of(actions.setAdditionalReposDataStore({ payload: null })))
         );
