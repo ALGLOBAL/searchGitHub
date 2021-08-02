@@ -1,0 +1,30 @@
+<div class="wrapper">
+  <div class="wrapper-table">
+    <div class="table">
+      <span class="row-title">login</span>
+      <span class="row-value">{{ additionalData?.login || 'No data' }}</span>
+
+      <span class="row-title">id</span>
+      <span class="row-value">{{ additionalData?.id || 'No data' }}</span>
+
+      <span class="row-title">node_id</span>
+      <span class="row-value">{{ additionalData?.node_id || 'No data' }}</span>
+
+      <span class="row-title">type</span>
+      <span class="row-value">{{ additionalData?.type || 'No data' }}</span>
+
+      <span class="row-title">site_admin</span>
+      <span class="row-value">{{ additionalData?.site_admin || 'No data' }}</span>
+
+      <span class="row-title">url</span>
+      <span class="row-value">{{ additionalData?.url || 'No data' }}</span>
+
+      <span class="row-title">followers_url</span>
+      <span class="row-value">{{ additionalData?.followers_url || 'No data' }}</span>
+
+      <span class="row-title">avatar_url</span>
+      <span class="row-value">{{ additionalData?.avatar_url || 'No data' }}</span>
+    </div>
+  </div>
+  <button class="back-btn" mat-raised-button color="primary" (click)="onClick()" >Back</button>
+</div>

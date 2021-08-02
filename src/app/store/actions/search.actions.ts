@@ -9,6 +9,7 @@ export enum ESearchActions {
   OnChangeSearch = 'on_change_search',
   ToggleLoading = 'toggle_loading',
   ClearRepositories = 'clear_repositories',
+  ClearAdditionalReposData = 'clear_additional_repos_data',
 }
 
 export const toggleLoading = createAction(
@@ -39,3 +40,8 @@ export const setRepositoriesStore = createAction(
 export const clearRepositories = createAction(
   ESearchActions.ClearRepositories,
 );
+
+export const clearAdditionalReposData = createAction(
+  ESearchActions.ClearAdditionalReposData,
+);
+

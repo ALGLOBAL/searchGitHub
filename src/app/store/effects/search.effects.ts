@@ -30,7 +30,7 @@ export class SearchEffects {
       switchMap(action => {
         return this.repositoriesService.getQuery(action.payload.query).pipe(
           map(repo => actions.setAdditionalReposDataStore({ payload: repo.organization })),
-          catchError(() => of(actions.setAdditionalReposDataStore({ payload: null })))
+          catchError(() => of(actions.clearAdditionalReposData()))
         );
       }),
     )

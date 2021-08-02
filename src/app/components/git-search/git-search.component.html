@@ -1,12 +1,12 @@
 <div class="wrapper">
   <h3 class="wrapper-title">GitHub search</h3>
-  <div class="wrapper-mat_input">
+  <div class="wrapper-mat_input" *ngIf="!additionalData; else null">
     <mat-form-field appearance="fill">
-      <mat-label>Search or jump to...</mat-label>
-      <input matInput [type]="'text'" (input)="onChange($event)">
+      <mat-label>Search</mat-label>
+      <input matInput [value]="querySearch" [type]="'text'" (input)="onChange($event)">
     </mat-form-field>
   </div>
-  <div class="wrapper-filter">
+  <div class="wrapper-filter" *ngIf="!additionalData; else null">
     <div class="filter">
       <div class="filter-title">Select filter for programming language</div>
       <div class="filter-checkboxes">
@@ -14,25 +14,28 @@
                       class="filter-checkbox example-margin">{{ filters[0].name }}</mat-checkbox>
         <mat-checkbox (change)="onCheck($event)" [name]="filters[1].name" [checked]="filters[1].isChecked"
                       class="filter-checkbox example-margin">{{ filters[1].name }}</mat-checkbox>
+        <mat-checkbox (change)="onCheck($event)" [name]="filters[2].name" [checked]="filters[2].isChecked"
+                      class="filter-checkbox example-margin">{{ filters[2].name }}</mat-checkbox>
+        <mat-checkbox (change)="onCheck($event)" [name]="filters[3].name" [checked]="filters[3].isChecked"
+                      class="filter-checkbox example-margin">{{ filters[3].name }}</mat-checkbox>
       </div>
     </div>
   </div>
-  <div class="wrapper-body">
-    <div class="wrapper-body" *ngIf="!isLoad; else loadingBlock">
-      <div class="results_block" *ngIf="repositories?.items.length; else noResultsBlock">
-        <ng-container *ngTemplateOutlet="resultsBlock"></ng-container>
-      </div>
-    </div>
+  <div class="wrapper-body" *ngIf="!isLoad; else loadingBlock">
+    <div *ngIf="additionalData; then additionalDataBlock else resultsBlock"></div>
   </div>
 </div>
 
 <ng-template #resultsBlock>
-  <ul class="list">
-    <app-repository-display
-      [searchResults]="repositories"
-      *ngIf="repositories">
-    </app-repository-display>
-  </ul>
+  <div class="results_block" *ngIf="repositories?.items.length; else noResultsBlock">
+    <ul class="list">
+      <app-repository-display
+        [searchResults]="repositories"
+        *ngIf="repositories"
+      >
+      </app-repository-display>
+    </ul>
+  </div>
 </ng-template>
 
 <ng-template #noResultsBlock>
@@ -41,4 +44,12 @@
 
 <ng-template  #loadingBlock>
   <div class="loading">Loading...</div>
+</ng-template>
+
+<ng-template  #additionalDataBlock>
+  <app-additional-data class="additional-data"
+    [additionalData]="additionalData"
+    *ngIf="additionalData"
+  >
+  </app-additional-data>
 </ng-template>

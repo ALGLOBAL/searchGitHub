@@ -5,6 +5,7 @@ import * as selectors from '../../store/selectors/search.selectors';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../store/state/app.state';
 import { GitSearch } from '../../models/git-search';
+import { GitAdditionalData } from '../../models/git-additional-data';
 import { filter } from './logic';
 
 @Component({
@@ -15,6 +16,8 @@ import { filter } from './logic';
 export class GitSearchComponent implements OnInit {
   repositories: GitSearch;
   repositories$: Observable<GitSearch> = this.store.select(selectors.selectRepositories);
+  additionalData: GitAdditionalData;
+  additionalData$: Observable<GitAdditionalData> = this.store.select(selectors.selectAdditionalData);
   isLoad: boolean = false;
   loading$: Observable<boolean> = this.store.select(selectors.selectIsLoading);
   filters = [{
@@ -22,6 +25,12 @@ export class GitSearchComponent implements OnInit {
     isChecked: false,
   }, {
     name: 'TypeScript',
+    isChecked: false,
+  }, {
+    name: 'Java',
+    isChecked: false,
+  }, {
+    name: 'C#',
     isChecked: false,
   }];
   querySearch: string = '';
@@ -36,7 +45,11 @@ export class GitSearchComponent implements OnInit {
     this.repositories$.subscribe((repos: GitSearch) => {
       this.store.dispatch(actions.toggleLoading({ payload: false }));
       this.repositories = filter(repos, this.filters);
-    })
+    });
+
+    this.additionalData$.subscribe((data: GitAdditionalData) => {
+      this.additionalData = data;
+    });
   };
 
   onSearch = () => {

@@ -14,10 +14,15 @@ const searchReducer = createReducer(
   })),
   on(actions.clearRepositories, () => ({
     ...initialAppState,
+    loading: false,
   })),
   on(actions.setAdditionalReposDataStore, (state, { payload }) => ({
     ...state,
     additionalData: { ...payload },
+  })),
+  on(actions.clearAdditionalReposData, (state) => ({
+    ...state,
+    additionalData: null,
   })),
 );
 

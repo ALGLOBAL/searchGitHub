@@ -8,10 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { GitSearchService } from './services/git-search.service';
 import { GitSearchComponent } from './components/git-search/git-search.component';
+import { AdditionalDataComponent } from './components/additional-data/additional-data.component';
 import { RepositoryDisplayComponent } from './components/repository-display/repository-display.component';
 import { FadeDirective } from './directives/fade.directive';
 import { MatInputModule } from '@angular/material/input';
-import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store'
 import { reducer } from './store/reducers/search.reducer';
@@ -25,6 +27,7 @@ import { SearchEffects } from './store/effects/search.effects';
     AppComponent,
     GitSearchComponent,
     RepositoryDisplayComponent,
+    AdditionalDataComponent,
     FadeDirective,
   ],
   imports: [
@@ -35,6 +38,7 @@ import { SearchEffects } from './store/effects/search.effects';
     ReactiveFormsModule,
     MatInputModule,
     MatCheckboxModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({model: reducer}),
     StoreDevtoolsModule.instrument({
