@@ -55,7 +55,7 @@ export class GitSearchComponent implements OnInit {
   onSearch = () => {
     !this.isLoad && this.store.dispatch(actions.toggleLoading({ payload: true }));
     this.store.dispatch(actions.onChangeSearch({ payload: {
-        query: this.querySearch,
+        query: this.querySearch.toLowerCase(),
       }
     }));
   };
