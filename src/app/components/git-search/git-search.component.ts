@@ -5,6 +5,7 @@ import * as selectors from '../../store/selectors/search.selectors';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../store/state/app.state';
 import { GitSearch } from '../../models/git-search';
+import { filter } from './logic';
 
 @Component({
   selector: 'app-git-search',
@@ -16,13 +17,21 @@ export class GitSearchComponent implements OnInit {
   repositories$: Observable<GitSearch> = this.store.select(selectors.selectRepositories);
   isLoad: boolean = false;
   loading$: Observable<boolean> = this.store.select(selectors.selectIsLoading);
-  filters: Array<string> = ['JavaScript'];
+  filters = [{
+    name: 'JavaScript',
+    isChecked: false,
+  }, {
+    name: 'TypeScript',
+    isChecked: false,
+  }];
+  querySearch: string = '';
 
   ngOnInit() {
     this.loading$.subscribe((data: boolean) => this.isLoad = data);
+
     this.repositories$.subscribe((repos: GitSearch) => {
       this.store.dispatch(actions.toggleLoading({ payload: false }));
-      this.repositories = repos;
+      this.repositories = filter(repos, this.filters);
     })
   };
 
@@ -30,12 +39,28 @@ export class GitSearchComponent implements OnInit {
     private store: Store<IAppState>,
   ) {};
 
-  onChange = (event) => {
+  onSearch = () => {
     !this.isLoad && this.store.dispatch(actions.toggleLoading({ payload: true }));
     this.store.dispatch(actions.onChangeSearch({ payload: {
-        query: event.target.value,
-        filters: this.filters,
+        query: this.querySearch,
       }
     }));
+  };
+
+  onChange = (event) => {
+    this.querySearch = event.target.value;
+    this.onSearch();
+  };
+
+  onCheck = (event) => {
+    for (const filter of this.filters) {
+      if (event.source.name !== filter.name) {
+        continue;
+      }
+
+      filter.isChecked = event.checked;
+    }
+
+    this.onSearch();
   }
 }

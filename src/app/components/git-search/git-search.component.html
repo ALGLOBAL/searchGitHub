@@ -5,7 +5,17 @@
       <mat-label>Search or jump to...</mat-label>
       <input matInput [type]="'text'" (input)="onChange($event)">
     </mat-form-field>
-    <!--<mat-checkbox class="example-margin">Check me!</mat-checkbox>-->
+  </div>
+  <div class="wrapper-filter">
+    <div class="filter">
+      <div class="filter-title">Select filter for programming language</div>
+      <div class="filter-checkboxes">
+        <mat-checkbox (change)="onCheck($event)" [name]="filters[0].name" [checked]="filters[0].isChecked"
+                      class="filter-checkbox example-margin">{{ filters[0].name }}</mat-checkbox>
+        <mat-checkbox (change)="onCheck($event)" [name]="filters[1].name" [checked]="filters[1].isChecked"
+                      class="filter-checkbox example-margin">{{ filters[1].name }}</mat-checkbox>
+      </div>
+    </div>
   </div>
   <div class="wrapper-body">
     <div class="wrapper-body" *ngIf="!isLoad; else loadingBlock">
