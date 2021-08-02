@@ -12,5 +12,9 @@ export class RepositoryDisplayComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
+  };
+
+  onClick(url) {
+
+  };
 }

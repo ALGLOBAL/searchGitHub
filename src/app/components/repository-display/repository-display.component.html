@@ -2,8 +2,9 @@
 [ngClass]="{'even': (i % 2 === 0), 'odd': (i % 2 !== 0)}"
 class="list_item"
 appFade
+
 *ngFor="let result of searchResults.items; index as i">
-  <div class="content">
+  <div class="content" (click)="onClick(result.url)">
     <div class="content-image">
       <img class="avatar" [src]="result.owner.avatar_url" />
     </div>
